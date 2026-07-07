@@ -107,3 +107,22 @@ function drawMatrix(){
 }
 
 setInterval(drawMatrix,45);
+function typeText(element, text, speed = 35) {
+
+    element.textContent = "";
+
+    let i = 0;
+
+    const timer = setInterval(() => {
+
+        element.textContent += text.charAt(i);
+
+        i++;
+
+        if (i >= text.length) {
+            clearInterval(timer);
+        }
+
+    }, speed);
+
+}
