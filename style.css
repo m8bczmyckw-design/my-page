@@ -346,3 +346,75 @@ color:#7cffb0;
 font-family:'Orbitron',sans-serif;
 
 }
+/* ===== EXTRA EFFECTS ===== */
+
+.terminal::before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(0,255,102,.12);
+  pointer-events:none;
+}
+
+.terminal::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(0,255,102,.08) 45%,
+    transparent 60%
+  );
+  transform:translateX(-120%);
+  animation:scan 5s infinite;
+  pointer-events:none;
+}
+
+@keyframes scan{
+  to{transform:translateX(120%)}
+}
+
+body.glitch .terminal{
+  animation:glitch .25s infinite;
+}
+
+@keyframes glitch{
+  0%{transform:translate(0)}
+  25%{transform:translate(-6px,3px)}
+  50%{transform:translate(6px,-3px)}
+  75%{transform:translate(-3px,-2px)}
+  100%{transform:translate(0)}
+}
+
+.danger{
+  color:#ff3131!important;
+  text-shadow:0 0 18px red,0 0 40px red!important;
+}
+
+.final-party{
+  font-size:22px;
+  line-height:2;
+  animation:pulse 1s infinite alternate;
+}
+
+@keyframes pulse{
+  from{filter:brightness(1)}
+  to{filter:brightness(1.8)}
+}
+
+@media(max-width:430px){
+  .terminal{
+    width:94vw;
+    height:82vh;
+    margin:4vh auto;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  .buttons{
+    grid-template-columns:1fr;
+  }
+}
