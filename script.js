@@ -51,9 +51,14 @@ return;
 
 }
 
-document.getElementById("label").textContent=questions[current].title;
+document.getElementById("label").textContent =
+questions[current].title;
 
-document.getElementById("question").textContent=questions[current].text;
+typeText(
+document.getElementById("question"),
+questions[current].text,
+30
+);
 
 document.getElementById("hint").textContent="RESPONSE REQUIRED";
 
@@ -126,3 +131,12 @@ function typeText(element, text, speed = 35) {
     }, speed);
 
 }
+window.onload = () => {
+
+typeText(
+document.getElementById("question"),
+questions[0].text,
+30
+);
+
+};
