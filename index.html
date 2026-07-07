@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SYNTHESIS PROTOCOL</title>
-  <link rel="stylesheet" href="style.css" />
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SYNTHESIS PROTOCOL</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
-  <canvas id="matrix"></canvas>
 
-  <main class="terminal">
-    <div class="top">
-      <span>SYNTHESIS_PROTOCOL</span>
-      <span id="status">SIGNAL UNSTABLE</span>
-    </div>
+<canvas id="matrix"></canvas>
 
-    <section id="screen" class="screen">
-      <p class="label" id="label">MEMORY ANALYSIS</p>
+<main class="terminal">
 
-      <h1 id="question"></h1>
+<div class="top">
 
-      <div class="buttons">
-        <button onclick="answer('ACCEPT')">ACCEPT</button>
-        <button onclick="answer('REJECT')">REJECT</button>
-      </div>
+<span>SYNTHESIS_PROTOCOL</span>
 
-      <p class="hint" id="hint">RESPONSE REQUIRED</p>
-    </section>
-  </main>
+<span id="status">SIGNAL UNSTABLE</span>
 
-  <script src="script.js"></script>
+</div>
+
+<section class="screen">
+
+<p class="label" id="label"></p>
+
+<h1 id="question"></h1>
+
+<div class="buttons">
+
+<button id="accept">ACCEPT</button>
+
+<button id="reject">REJECT</button>
+
+</div>
+
+<p class="hint" id="hint"></p>
+
+</section>
+
+</main>
+
+<script src="questions.js"></script>
+
+<script src="effects.js"></script>
+
+<script src="matrix.js"></script>
+
+<script src="ending.js"></script>
+
+<script src="script.js"></script>
+
 </body>
+
 </html>
