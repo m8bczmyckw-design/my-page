@@ -1,83 +1,69 @@
 const questions = [
-{
-title:"MEMORY ANALYSIS",
-text:"هل تعتبر ذاكرتك جزءًا من هويتك؟"
-},
-{
-title:"BODY REPLACEMENT",
-text:"إذا أمكن استبدال جسدك بالكامل بآلة، هل ستوافق؟"
-},
-{
-title:"EMOTION FILTER",
-text:"هل المشاعر مجرد إشارات كهربائية يمكن استبدالها؟"
-},
-{
-title:"COGNITIVE LIMIT",
-text:"هل ترغب بإزالة جميع حدود عقلك البشري؟"
-},
-{
-title:"NEURAL CONSENT",
-text:"هل تسمح للنظام بإعادة كتابة وعيك؟"
-},
-{
-title:"IDENTITY CHECK",
-text:"إذا أصبحت نسخة رقمية منك... هل ما زلت أنت؟"
-},
-{
-title:"FINAL VERIFICATION",
-text:"بعد كل ما سبق... هل ما زلت تعتبر نفسك إنسانًا؟"
-}
+  { title:"MEMORY ANALYSIS", text:"هل تعتبر ذاكرتك جزءًا من هويتك؟" },
+  { title:"BODY REPLACEMENT", text:"إذا أمكن استبدال جميع أعضاء جسدك بأخرى صناعية أكثر كفاءة، هل ستوافق؟" },
+  { title:"EMOTION FILTER", text:"هل تعتقد أن المشاعر يمكن اختزالها إلى إشارات كهربائية؟" },
+  { title:"IDENTITY CHECK", text:"إذا نُقل وعيك إلى جسد آلي، هل ستظل أنت؟" },
+  { title:"COGNITIVE LIMIT", text:"هل ترغب في إزالة جميع الحدود الطبيعية لعقلك؟" },
+  { title:"NEURAL CONSENT", text:"هل تسمح للنظام بإعادة كتابة بنيتك العصبية؟" },
+  { title:"FINAL VERIFICATION", text:"بعد كل ما سبق... هل ما زلت تعتبر نفسك إنسانًا؟" }
 ];
 
-let current=0;
+let current = 0;
+
+const label = document.getElementById("label");
+const question = document.getElementById("question");
+const hint = document.getElementById("hint");
+const buttons = document.querySelector(".buttons");
+const statusText = document.getElementById("status");
+
+function typeText(element, text, speed = 35){
+  element.textContent = "";
+  let i = 0;
+  const timer = setInterval(() => {
+    element.textContent += text[i] || "";
+    i++;
+    if(i >= text.length) clearInterval(timer);
+  }, speed);
+}
 
 function answer(choice){
+  buttons.style.pointerEvents = "none";
+  document.body.classList.add("glitch");
+  hint.textContent = "ANALYZING...";
+  statusText.textContent = "PROCESSING";
 
-document.body.classList.add("glitch");
+  setTimeout(() => {
+    current++;
+    document.body.classList.remove("glitch");
+    buttons.style.pointerEvents = "auto";
 
-document.getElementById("hint").textContent="PROCESSING...";
+    if(current >= questions.length){
+      ending();
+      return;
+    }
 
-setTimeout(()=>{
-
-document.body.classList.remove("glitch");
-
-current++;
-
-if(current>=questions.length){
-
-endSequence();
-
-return;
-
+    label.textContent = questions[current].title;
+    typeText(question, questions[current].text, 35);
+    hint.textContent = "RESPONSE REQUIRED";
+    statusText.textContent = "SIGNAL UNSTABLE";
+  }, 700);
 }
 
-document.getElementById("label").textContent =
-questions[current].title;
-
-typeText(
-document.getElementById("question"),
-questions[current].text,
-30
-);
-
-document.getElementById("hint").textContent="RESPONSE REQUIRED";
-
-},500);
-
+function ending(){
+  statusText.textContent = "ERROR";
+  buttons.style.display = "none";
+  label.textContent = "SYSTEM FAILURE";
+  question.classList.add("danger");
+  typeText(question, "⚠ HUMAN CONSCIOUSNESS LOST", 55);
+  hint.textContent = "SYNTHESIS COMPLETE";
 }
 
-function endSequence(){
+window.onload = () => {
+  label.textContent = questions[0].title;
+  typeText(question, questions[0].text, 35);
+};
 
-document.getElementById("label").textContent="SYSTEM";
-
-document.getElementById("question").textContent="⚠ HUMAN CONSCIOUSNESS LOST";
-
-document.getElementById("question").classList.add("danger");
-
-document.querySelector(".buttons").style.display="none";
-
-document.getElementById("hint").textContent="SYNTHESIS COMPLETE";
-}
+/* MATRIX BACKGROUND */
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -96,7 +82,6 @@ let drops = Array(columns).fill(1);
 function drawMatrix(){
   ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
-
   ctx.fillStyle = "#00ff66";
   ctx.font = fontSize + "px monospace";
 
@@ -112,31 +97,3 @@ function drawMatrix(){
 }
 
 setInterval(drawMatrix,45);
-function typeText(element, text, speed = 35) {
-
-    element.textContent = "";
-
-    let i = 0;
-
-    const timer = setInterval(() => {
-
-        element.textContent += text.charAt(i);
-
-        i++;
-
-        if (i >= text.length) {
-            clearInterval(timer);
-        }
-
-    }, speed);
-
-}
-window.onload = () => {
-
-typeText(
-document.getElementById("question"),
-questions[0].text,
-30
-);
-
-};
