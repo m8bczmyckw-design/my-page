@@ -1,11 +1,45 @@
+// ===============================
+// SYNTHESIS PROTOCOL
+// PART 1
+// ===============================
+
 const questions = [
-  { title:"MEMORY ANALYSIS", text:"هل تعتبر ذاكرتك جزءًا من هويتك؟" },
-  { title:"BODY REPLACEMENT", text:"إذا أمكن استبدال جميع أعضاء جسدك بأخرى صناعية أكثر كفاءة، هل ستوافق؟" },
-  { title:"EMOTION FILTER", text:"هل تعتقد أن المشاعر يمكن اختزالها إلى إشارات كهربائية؟" },
-  { title:"IDENTITY CHECK", text:"إذا نُقل وعيك إلى جسد آلي، هل ستظل أنت؟" },
-  { title:"COGNITIVE LIMIT", text:"هل ترغب في إزالة جميع الحدود الطبيعية لعقلك؟" },
-  { title:"NEURAL CONSENT", text:"هل تسمح للنظام بإعادة كتابة بنيتك العصبية؟" },
-  { title:"FINAL VERIFICATION", text:"بعد كل ما سبق... هل ما زلت تعتبر نفسك إنسانًا؟" }
+
+{
+title:"MEMORY ANALYSIS",
+text:"هل تعتبر ذاكرتك جزءًا من هويتك؟"
+},
+
+{
+title:"BODY REPLACEMENT",
+text:"إذا أمكن استبدال جميع أعضاء جسدك بأخرى صناعية أكثر كفاءة، هل ستوافق؟"
+},
+
+{
+title:"EMOTION FILTER",
+text:"هل تعتقد أن المشاعر ليست سوى إشارات كهربائية؟"
+},
+
+{
+title:"IDENTITY CHECK",
+text:"إذا تم نقل وعيك إلى جسد آلي بالكامل، هل ستظل أنت؟"
+},
+
+{
+title:"COGNITIVE LIMIT",
+text:"هل توافق على إزالة جميع الحدود الطبيعية لعقلك؟"
+},
+
+{
+title:"NEURAL CONSENT",
+text:"هل تسمح للنظام بإعادة كتابة بنيتك العصبية؟"
+},
+
+{
+title:"FINAL VERIFICATION",
+text:"بعد كل ما سبق... هل ما زلت تعتبر نفسك إنسانًا؟"
+}
+
 ];
 
 let current = 0;
@@ -16,84 +50,204 @@ const hint = document.getElementById("hint");
 const buttons = document.querySelector(".buttons");
 const statusText = document.getElementById("status");
 
-function typeText(element, text, speed = 35){
-  element.textContent = "";
-  let i = 0;
-  const timer = setInterval(() => {
-    element.textContent += text[i] || "";
-    i++;
-    if(i >= text.length) clearInterval(timer);
-  }, speed);
+function typeText(element,text,speed=28){
+
+element.textContent="";
+
+let i=0;
+
+const timer=setInterval(()=>{
+
+element.textContent+=text.charAt(i);
+
+i++;
+
+if(i>=text.length){
+
+clearInterval(timer);
+
 }
 
-function answer(choice){
-  buttons.style.pointerEvents = "none";
-  document.body.classList.add("glitch");
-  hint.textContent = "ANALYZING...";
-  statusText.textContent = "PROCESSING";
+},speed);
 
-  setTimeout(() => {
-    current++;
-    document.body.classList.remove("glitch");
-    buttons.style.pointerEvents = "auto";
-
-    if(current >= questions.length){
-      ending();
-      return;
-    }
-
-    label.textContent = questions[current].title;
-    typeText(question, questions[current].text, 35);
-    hint.textContent = "RESPONSE REQUIRED";
-    statusText.textContent = "SIGNAL UNSTABLE";
-  }, 700);
 }
 
-function ending(){
-  statusText.textContent = "ERROR";
-  buttons.style.display = "none";
-  label.textContent = "SYSTEM FAILURE";
-  question.classList.add("danger");
-  typeText(question, "⚠ HUMAN CONSCIOUSNESS LOST", 55);
-  hint.textContent = "SYNTHESIS COMPLETE";
+function loadQuestion(){
+
+label.textContent=questions[current].title;
+
+typeText(question,questions[current].text);
+
+hint.textContent="RESPONSE REQUIRED";
+
+statusText.textContent="SIGNAL UNSTABLE";
+
 }
 
-window.onload = () => {
-  label.textContent = questions[0].title;
-  typeText(question, questions[0].text, 35);
+window.onload=()=>{
+
+loadQuestion();
+
 };
 
-/* MATRIX BACKGROUND */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+function answer(choice){
 
-function resizeMatrix(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeMatrix();
-window.addEventListener("resize", resizeMatrix);
+buttons.style.pointerEvents="none";
 
-const letters = "01 SYNTHESIS HUMAN MACHINE ERROR ";
-const fontSize = 16;
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(1);
+document.body.classList.add("glitch");
 
-function drawMatrix(){
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "#00ff66";
-  ctx.font = fontSize + "px monospace";
+hint.textContent="PROCESSING...";
 
-  for(let i=0;i<drops.length;i++){
-    const text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+statusText.textContent="ANALYZING";
 
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975){
-      drops[i]=0;
-    }
-    drops[i]++;
-  }
+setTimeout(()=>{
+
+document.body.classList.remove("glitch");
+
+current++;
+
+if(current>=questions.length){
+
+startEnding();
+
+return;
+
 }
 
-setInterval(drawMatrix,45);
+buttons.style.pointerEvents="auto";
+
+loadQuestion();
+
+},700);
+
+}
+
+function startEnding(){
+
+buttons.style.display="none";
+
+statusText.textContent="SYSTEM FAILURE";
+
+const sequence=[
+
+"Reading consciousness...",
+
+"Scanning neural activity...",
+
+"Removing biological limitations...",
+
+"Uploading synthetic identity...",
+
+""
+
+];
+
+let step=0;
+
+function next(){
+
+if(step<sequence.length){
+
+typeText(question,sequence[step],20);
+
+step++;
+
+setTimeout(next,1200);
+
+}else{
+
+showFailure();
+
+}
+
+}
+
+next();
+
+}
+
+function showFailure(){
+
+label.textContent="ERROR";
+
+question.classList.add("danger");
+
+question.innerHTML=`
+
+<div class="final-party">
+
+⚠ HUMAN CONSCIOUSNESS LOST
+
+<br><br>
+
+WELCOME VERSION 2.0
+
+</div>
+
+`;
+
+hint.textContent="SYNTHESIS COMPLETE";
+
+statusText.textContent="OFFLINE";
+
+}
+
+// ===== MATRIX =====
+
+const canvas=document.getElementById("matrix");
+
+const ctx=canvas.getContext("2d");
+
+function resize(){
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight;
+
+columns=Math.floor(canvas.width/fontSize);
+
+drops=new Array(columns).fill(1);
+
+}
+
+const fontSize=16;
+
+let columns=0;
+
+let drops=[];
+
+resize();
+
+window.addEventListener("resize",resize);
+
+const chars="01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function matrix(){
+
+ctx.fillStyle="rgba(0,0,0,.08)";
+
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ff66";
+
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const char=chars[Math.floor(Math.random()*chars.length)];
+
+ctx.fillText(char,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height&&Math.random()>.975){
+
+drops[i]=0;
+
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(matrix,35);
